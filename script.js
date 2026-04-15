@@ -291,16 +291,13 @@
     body.append('cancion',   data.cancion);
     body.append('timestamp', data.timestamp);
 
-    const response = await fetch(APPS_SCRIPT_URL, {
+    // mode: 'no-cors' bypasses CORS preflight for Google Apps Script.
+    // The response will be opaque (unreadable) but the data reaches the sheet.
+    await fetch(APPS_SCRIPT_URL, {
       method: 'POST',
+      mode: 'no-cors',
       body: body
     });
-
-    if (!response.ok) {
-      throw new Error('Network error: ' + response.status);
-    }
-
-    return response.json();
   }
 
   /* ─────────────────────────────────────────────────────────

@@ -284,18 +284,20 @@
       return;
     }
 
-    // GET with URL params — most reliable method for Apps Script.
-    // No CORS preflight, no redirect issues, no 403.
-    const url = new URL(APPS_SCRIPT_URL);
-    url.searchParams.set('nombre',    data.nombre);
-    url.searchParams.set('whatsapp',  data.whatsapp);
-    url.searchParams.set('email',     data.email);
-    url.searchParams.set('cancion',   data.cancion);
-    url.searchParams.set('timestamp', data.timestamp);
+    // Image pixel trick: bypasses CORS entirely and survives Apps Script redirects.
+    // fetch + no-cors strips query params on redirect — Image() does not.
+    var params = [
+      'nombre='    + encodeURIComponent(data.nombre    || ''),
+      'whatsapp='  + encodeURIComponent(data.whatsapp  || ''),
+      'email='     + encodeURIComponent(data.email     || ''),
+      'cancion='   + encodeURIComponent(data.cancion   || ''),
+      'timestamp=' + encodeURIComponent(data.timestamp || new Date().toISOString())
+    ].join('&');
 
-    await fetch(url.toString(), {
-      method: 'GET',
-      mode: 'no-cors'
+    await new Promise(function (resolve) {
+      var img = new Image();
+      img.onload = img.onerror = resolve; // resolves on both success and error
+      img.src = APPS_SCRIPT_URL + '?' + params;
     });
   }
 

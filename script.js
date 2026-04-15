@@ -177,19 +177,24 @@
     state.formData.email     = inputEmail.value.trim();
     state.formData.timestamp = new Date().toISOString();
 
-    // Show loading briefly for perceived feedback
+    // Show loading and submit to Sheets immediately
     var btnText    = btnRegistro.querySelector('.btn-text');
     var btnLoading = btnRegistro.querySelector('.btn-loading');
     btnText.hidden    = true;
     btnLoading.hidden = false;
     btnRegistro.disabled = true;
 
+    // Submit now — don't wait for step 3
+    submitToSheets(state.formData).catch(function (err) {
+      console.error('[Zuco] Sheets submission error:', err);
+    });
+
     setTimeout(function () {
       btnText.hidden    = false;
       btnLoading.hidden = true;
       btnRegistro.disabled = false;
       goToStep(2);
-    }, 500);
+    }, 600);
   });
 
   /* ─────────────────────────────────────────────────────────
@@ -261,21 +266,14 @@
   /* ─────────────────────────────────────────────────────────
      GOOGLE APPS SCRIPT SUBMISSION
   ───────────────────────────────────────────────────────── */
-  async function submitAndConfirm() {
+  function submitAndConfirm() {
     var btnText    = btnConfirmar.querySelector('.btn-text');
     var btnLoading = btnConfirmar.querySelector('.btn-loading');
     btnText.hidden    = true;
     btnLoading.hidden = false;
     btnConfirmar.disabled = true;
 
-    try {
-      await submitToSheets(state.formData);
-    } catch (err) {
-      // Graceful degradation: always show success even if submission fails.
-      // The registration experience is more important than an error message.
-      console.error('[Zuco] Sheets submission error:', err);
-    }
-
+    // Data was already submitted at step 1. Go straight to success.
     goToStep('success');
   }
 

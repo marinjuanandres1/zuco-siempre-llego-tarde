@@ -679,11 +679,12 @@ blockquote {
 }
 
 .card-lyric {
-  font-family: var(--f-display);
-  font-size: 1.05rem;
-  line-height: 1.55;
+  font-family: var(--f-body);
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.6;
   color: var(--t-primary);
-  font-style: italic;
+  font-style: normal;
 }
 
 /* ═══════════════════════════════════════════════════════════

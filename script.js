@@ -229,6 +229,10 @@
 
   btnLyric.addEventListener('click', function () {
     if (state.formData.cancion) {
+      // Submit again with cancion filled (step 1 saved without it)
+      submitToSheets(state.formData).catch(function (err) {
+        console.error('[Zuco] Cancion submit error:', err);
+      });
       goToStep(3);
     }
   });

@@ -435,7 +435,7 @@ blockquote {
    LAYER 8 — STEP HEADER
 ═══════════════════════════════════════════════════════════ */
 .step-header {
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .step-title {
@@ -608,12 +608,12 @@ blockquote {
 .lyric-cards {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-bottom: 28px;
+  gap: 8px;
+  margin-bottom: 16px;
 }
 
 .lyric-card {
-  padding: 20px;
+  padding: 14px 16px;
   background-color: var(--c-bg-card);
   border: 1px solid var(--b-subtle);
   border-radius: var(--radius-card);
@@ -621,20 +621,6 @@ blockquote {
   transition: border-color var(--ease-fast), background-color var(--ease-fast), transform var(--ease-fast);
   position: relative;
   overflow: hidden;
-}
-
-.lyric-card::before {
-  content: '"';
-  position: absolute;
-  top: -12px;
-  right: 16px;
-  font-family: var(--f-display);
-  font-size: 80px;
-  color: var(--c-naranja);
-  opacity: 0.08;
-  line-height: 1;
-  pointer-events: none;
-  transition: opacity var(--ease-mid);
 }
 
 .lyric-card:hover {
@@ -663,12 +649,12 @@ blockquote {
 
 .card-song {
   display: block;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--c-naranja);
-  margin-bottom: 10px;
+  margin-bottom: 4px;
 }
 
 .feat {
@@ -681,8 +667,8 @@ blockquote {
 .card-lyric {
   font-family: var(--f-body);
   font-weight: 300;
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 0.88rem;
+  line-height: 1.45;
   color: var(--t-primary);
   font-style: normal;
 }

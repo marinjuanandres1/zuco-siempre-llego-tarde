@@ -284,19 +284,18 @@
       return;
     }
 
-    const body = new FormData();
-    body.append('nombre',    data.nombre);
-    body.append('whatsapp',  data.whatsapp);
-    body.append('email',     data.email);
-    body.append('cancion',   data.cancion);
-    body.append('timestamp', data.timestamp);
+    // GET with URL params — most reliable method for Apps Script.
+    // No CORS preflight, no redirect issues, no 403.
+    const url = new URL(APPS_SCRIPT_URL);
+    url.searchParams.set('nombre',    data.nombre);
+    url.searchParams.set('whatsapp',  data.whatsapp);
+    url.searchParams.set('email',     data.email);
+    url.searchParams.set('cancion',   data.cancion);
+    url.searchParams.set('timestamp', data.timestamp);
 
-    // mode: 'no-cors' bypasses CORS preflight for Google Apps Script.
-    // The response will be opaque (unreadable) but the data reaches the sheet.
-    await fetch(APPS_SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      body: body
+    await fetch(url.toString(), {
+      method: 'GET',
+      mode: 'no-cors'
     });
   }
 

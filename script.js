@@ -11,7 +11,7 @@
   /* ─────────────────────────────────────────────────────────
      CONFIG
   ───────────────────────────────────────────────────────── */
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz2NtWMom0jE3NPVAsqhiHmLrF0rmM9-XJeIaGhBFfWsx5IvU_pOhDV2NKtD9lL2jre/exec';
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwUPcBJt2ixx6r0euEG0I_qUVFjlx8jV2GHjW1Oko9lpHQbQSh1rJZ8QBQU7P2ETOmiCA/exec';
 
   /* ─────────────────────────────────────────────────────────
      STATE
@@ -284,8 +284,6 @@
       return;
     }
 
-    // Image pixel trick: bypasses CORS entirely and survives Apps Script redirects.
-    // fetch + no-cors strips query params on redirect — Image() does not.
     var params = [
       'nombre='    + encodeURIComponent(data.nombre    || ''),
       'whatsapp='  + encodeURIComponent(data.whatsapp  || ''),
@@ -294,11 +292,23 @@
       'timestamp=' + encodeURIComponent(data.timestamp || new Date().toISOString())
     ].join('&');
 
+    var fullUrl = APPS_SCRIPT_URL + '?' + params;
+    console.log('[Zuco] Submitting to:', fullUrl);
+    console.log('[Zuco] Data:', data);
+
     await new Promise(function (resolve) {
       var img = new Image();
-      img.onload = img.onerror = resolve; // resolves on both success and error
-      img.src = APPS_SCRIPT_URL + '?' + params;
+      img.onload = function () {
+        console.log('[Zuco] Image loaded OK');
+        resolve();
+      };
+      img.onerror = function () {
+        console.log('[Zuco] Image error (expected — not a real image, but request was sent)');
+        resolve();
+      };
+      img.src = fullUrl;
     });
+    console.log('[Zuco] Submit complete');
   }
 
   /* ─────────────────────────────────────────────────────────

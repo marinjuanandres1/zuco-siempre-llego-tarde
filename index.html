@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="Fiesta de lanzamiento del EP 'Siempre Llego Tarde' de Zuco OMG — Miércoles 29 de abril, 7PM, Antena">
+  <meta property="og:title" content="Zuco OMG — Siempre Llego Tarde">
+  <meta property="og:description" content="El más feliz de los tristes. Únete a la fiesta de lanzamiento del EP.">
+  <meta property="og:image" content="./assets/cover/portada-zuco.jpg">
+  <meta property="og:type" content="website">
+  <title>Zuco OMG — Siempre Llego Tarde</title>
+  <link rel="icon" href="./assets/logos/reduccion-z-blanco.png" type="image/png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+  <header class="site-hero">
+    <div class="hero-texture"></div>
+    <div class="hero-inner">
+      <img
+        src="./assets/logos/logo-zuco-blanco.png"
+        alt="Zuco OMG"
+        class="hero-logo"
+      >
+      <div class="hero-ep-block">
+        <span class="hero-ep-label">EP</span>
+        <h1 class="hero-ep-title">Siempre Llego Tarde</h1>
+      </div>
+      <p class="hero-concept">El más feliz de los tristes</p>
+      <div class="hero-event">
+        <p class="hero-date">Miércoles 29 de abril · 7:00 PM</p>
+        <p class="hero-venue">Antena · Carrera 14 #85-24</p>
+      </div>
+      <a href="#registro" class="hero-cta">Quiero estar ahí</a>
+    </div>
+    <div class="hero-scroll-hint" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════ PROGRESS ═══════════════════════════ -->
+  <div class="step-progress" id="step-progress" aria-label="Progreso del registro">
+    <div class="progress-inner">
+      <div class="progress-node active" data-step="1">
+        <span class="node-dot"></span>
+        <span class="node-label">Registro</span>
+      </div>
+      <div class="progress-line"></div>
+      <div class="progress-node" data-step="2">
+        <span class="node-dot"></span>
+        <span class="node-label">Tu canción</span>
+      </div>
+      <div class="progress-line"></div>
+      <div class="progress-node" data-step="3">
+        <span class="node-dot"></span>
+        <span class="node-label">Spotify</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ MAIN FLOW ═══════════════════════════ -->
+  <main class="flow-container" id="registro">
+
+    <!-- ───────── STEP 1: REGISTRO ───────── -->
+    <section id="step-1" class="flow-step active" aria-label="Paso 1: Registro">
+
+      <div class="step-header">
+        <h2 class="step-title">Reserva tu cupo</h2>
+        <p class="step-subtitle">
+          La entrada es gratis — pero el espacio es íntimo.<br>
+          Déjanos tus datos y quedas en la lista.
+        </p>
+      </div>
+
+      <form id="registro-form" class="form" novalidate>
+
+        <div class="field-group">
+          <label for="nombre" class="field-label">Nombre completo</label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            class="field-input"
+            placeholder="El que aparece en tu cédula"
+            autocomplete="name"
+            required
+          >
+          <span class="field-error" id="error-nombre" role="alert"></span>
+        </div>
+
+        <div class="field-group">
+          <label for="whatsapp" class="field-label">WhatsApp</label>
+          <input
+            type="tel"
+            id="whatsapp"
+            name="whatsapp"
+            class="field-input"
+            placeholder="3XX XXX XXXX"
+            autocomplete="tel"
+            required
+          >
+          <span class="field-hint">Solo te escribimos si hay un cambio de último momento.</span>
+          <span class="field-error" id="error-whatsapp" role="alert"></span>
+        </div>
+
+        <div class="field-group">
+          <label for="email" class="field-label">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="field-input"
+            placeholder="tu@email.com"
+            autocomplete="email"
+            required
+          >
+          <span class="field-error" id="error-email" role="alert"></span>
+        </div>
+
+        <button type="submit" class="btn-primary" id="btn-registro">
+          <span class="btn-text">Quiero estar ahí</span>
+          <span class="btn-loading" hidden aria-live="polite">Guardando...</span>
+        </button>
+
+        <p class="form-disclaimer">Sin spam. Sin listas de correo. Solo esta noche.</p>
+
+      </form>
+    </section>
+
+    <!-- ───────── STEP 2: CONEXIÓN EMOCIONAL ───────── -->
+    <section id="step-2" class="flow-step" aria-label="Paso 2: Tu canción">
+
+      <div class="step-header">
+        <h2 class="step-title">¿Cuál te llegó más?</h2>
+        <p class="step-subtitle">
+          Estas canciones hablan de lo que uno siente<br>
+          pero no sabe cómo decir. Elige la tuya.
+        </p>
+      </div>
+
+      <div class="lyric-cards" role="radiogroup" aria-label="Elige tu frase favorita">
+
+        <div class="lyric-card" data-song="Ok" role="radio" tabindex="0" aria-checked="false">
+          <span class="card-song">Ok</span>
+          <blockquote class="card-lyric">
+            "Aunque afuera todo esté mal yo estoy okay.<br>Si la ansiedad me gana y pierdo estoy okay."
+          </blockquote>
+        </div>
+
+        <div class="lyric-card" data-song="Mi Fiesta (ft. Nezzah)" role="radio" tabindex="0" aria-checked="false">
+          <span class="card-song">Mi Fiesta <span class="feat">ft. Nezzah</span></span>
+          <blockquote class="card-lyric">
+            "Yo quiero mi fiesta con todos los míos al lado.<br>Si el mundo se quema afuera, que no me coja mal parado."
+          </blockquote>
+        </div>
+
+        <div class="lyric-card" data-song="Solo" role="radio" tabindex="0" aria-checked="false">
+          <span class="card-song">Solo</span>
+          <blockquote class="card-lyric">
+            "Sin más yo quiero estar solo.<br>No me extrañen que estoy bien solo, solo."
+          </blockquote>
+        </div>
+
+        <div class="lyric-card" data-song="Uberconestrellita (ft. Esteesgarcia)" role="radio" tabindex="0" aria-checked="false">
+          <span class="card-song">Uberconestrellita <span class="feat">ft. Esteesgarcia</span></span>
+          <blockquote class="card-lyric">
+            "Tengo pinneada su casa en Uber con estrellita."
+          </blockquote>
+        </div>
+
+        <div class="lyric-card" data-song="Tal vez de eso se trata (ft. Mario Puglia)" role="radio" tabindex="0" aria-checked="false">
+          <span class="card-song">Tal vez de eso se trata <span class="feat">ft. Mario Puglia</span></span>
+          <blockquote class="card-lyric">
+            "No veo el final del oceano.<br>De pronto de eso se trata."
+          </blockquote>
+        </div>
+
+      </div>
+
+      <button class="btn-primary" id="btn-lyric" disabled aria-disabled="true">
+        Esta es la mía
+      </button>
+
+    </section>
+
+    <!-- ───────── STEP 3: SPOTIFY + CONFIRMACIÓN ───────── -->
+    <section id="step-3" class="flow-step" aria-label="Paso 3: Spotify">
+
+      <div class="step-header">
+        <h2 class="step-title">Un último paso</h2>
+        <p class="step-subtitle">
+          Antes de confirmar tu lugar, sigue a Zuco en Spotify.<br>
+          Para que no te pierdas lo que viene.
+        </p>
+      </div>
+
+      <div class="spotify-block">
+        <div class="spotify-artist">
+          <img
+            src="./assets/logos/icono-zuco-naranja.png"
+            alt="Icono Zuco OMG"
+            class="spotify-artist-icon"
+          >
+          <div class="spotify-artist-info">
+            <span class="spotify-artist-name">Zuco OMG</span>
+            <span class="spotify-artist-label">Artista en Spotify</span>
+          </div>
+        </div>
+
+        <a
+          href="https://open.spotify.com/artist/6hA5ALJWFb44ixgQMMvng7"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-spotify"
+          id="btn-spotify-link"
+        >
+          <svg class="spotify-icon-svg" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+            <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+          </svg>
+          Seguir en Spotify
+        </a>
+      </div>
+
+      <label class="checkbox-label" for="spotify-check">
+        <input
+          type="checkbox"
+          id="spotify-check"
+          class="checkbox-input"
+        >
+        <span class="checkbox-custom" aria-hidden="true"></span>
+        <span class="checkbox-text">Ya sigo a Zuco en Spotify</span>
+      </label>
+
+      <button class="btn-primary" id="btn-confirmar" disabled aria-disabled="true">
+        <span class="btn-text">Confirmar mi registro</span>
+        <span class="btn-loading" hidden aria-live="polite">Confirmando...</span>
+      </button>
+
+    </section>
+
+    <!-- ───────── SUCCESS SCREEN ───────── -->
+    <section id="step-success" class="flow-step success-screen" aria-label="Registro exitoso">
+
+      <div class="success-z-deco" aria-hidden="true">
+        <img src="./assets/logos/reduccion-z-blanco.png" alt="">
+      </div>
+
+      <div class="success-message">
+        <p class="success-body">
+          Listo, ya estás registrado. Ese día entras gratis con lista con tu nombre.
+          Allá te esperamos.
+        </p>
+        <p class="success-signature">
+          Atentamente, Zuco<br>
+          <em>— El más feliz de los tristes.</em>
+        </p>
+      </div>
+
+      <div class="success-event">
+        <p class="success-event-date">Miércoles 29 de abril</p>
+        <p class="success-event-time">7:00 PM</p>
+        <p class="success-event-venue">Antena · Carrera 14 #85-24</p>
+      </div>
+
+      <a
+        href="https://open.spotify.com/artist/6hA5ALJWFb44ixgQMMvng7"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-ghost"
+      >
+        Escuchar el EP en Spotify
+      </a>
+
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════ FOOTER ═══════════════════════════ -->
+  <footer class="site-footer">
+    <div class="footer-logos">
+      <img src="./assets/logos/logo-zuco-blanco.png" alt="Zuco OMG" class="footer-logo">
+      <span class="footer-divider">×</span>
+      <img src="./assets/logos/siente-logo-white.png" alt="Siente" class="footer-siente-logo">
+    </div>
+    <p class="footer-copy">© 2025 Zuco OMG</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

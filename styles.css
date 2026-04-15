@@ -1,0 +1,958 @@
+/* ═══════════════════════════════════════════════════════════
+   LAYER 1 — FONT FACES
+═══════════════════════════════════════════════════════════ */
+@font-face {
+  font-family: 'ACEH';
+  src: url('./fonts/Aceh-Light.otf') format('opentype');
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ACEH';
+  src: url('./fonts/Aceh-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ACEH';
+  src: url('./fonts/Aceh-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ACEH';
+  src: url('./fonts/Aceh-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ACEH';
+  src: url('./fonts/Aceh-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ACEH';
+  src: url('./fonts/Aceh-Black.otf') format('opentype');
+  font-weight: 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ACEH Soft';
+  src: url('./fonts/AcehSoft-Black.otf') format('opentype');
+  font-weight: 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Lakeside';
+  src: url('./fonts/Lakeside-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LAYER 2 — DESIGN TOKENS
+═══════════════════════════════════════════════════════════ */
+:root {
+  /* Colors */
+  --c-bg:           #0a0a0a;
+  --c-bg-card:      #111111;
+  --c-bg-card-hover:#161616;
+  --c-crema:        #ede8d0;
+  --c-naranja:      #d4713a;
+  --c-salmon:       #e8836a;
+  --c-oliva:        #7a7c52;
+  --c-azul:         #3a5a7c;
+
+  /* Text */
+  --t-primary:      #ede8d0;
+  --t-secondary:    rgba(237, 232, 208, 0.62);
+  --t-muted:        rgba(237, 232, 208, 0.35);
+
+  /* Borders */
+  --b-subtle:       rgba(237, 232, 208, 0.10);
+  --b-mid:          rgba(237, 232, 208, 0.22);
+  --b-accent:       rgba(212, 113, 58, 0.55);
+
+  /* Fonts */
+  --f-body:         'ACEH', system-ui, sans-serif;
+  --f-display:      'Lakeside', Georgia, serif;
+  --f-soft:         'ACEH Soft', 'ACEH', sans-serif;
+
+  /* Layout */
+  --max-w:          480px;
+  --pad-h:          24px;
+  --pad-v:          48px;
+  --radius-card:    12px;
+  --radius-btn:     8px;
+  --radius-input:   8px;
+
+  /* Motion */
+  --ease-fast:      0.16s ease;
+  --ease-mid:       0.32s ease;
+  --ease-slow:      0.55s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Spotify */
+  --c-spotify:      #1DB954;
+  --c-spotify-dark: #158a3e;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LAYER 3 — RESET + BASE
+═══════════════════════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--c-bg);
+  color: var(--t-primary);
+  font-family: var(--f-body);
+  font-weight: 400;
+  line-height: 1.6;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+blockquote {
+  quotes: none;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LAYER 4 — UTILITIES
+═══════════════════════════════════════════════════════════ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LAYER 5 — HERO
+═══════════════════════════════════════════════════════════ */
+.site-hero {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px var(--pad-h) 80px;
+  overflow: hidden;
+  background-color: var(--c-bg);
+}
+
+.hero-texture {
+  position: absolute;
+  inset: 0;
+  background-image: url('./assets/textures/fondo-2.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.15;
+  mix-blend-mode: luminosity;
+  pointer-events: none;
+}
+
+/* Gradient fade at bottom of hero */
+.site-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  background: linear-gradient(to bottom, transparent, var(--c-bg));
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+  max-width: var(--max-w);
+  width: 100%;
+}
+
+.hero-logo {
+  width: 140px;
+  height: auto;
+  filter: drop-shadow(0 0 24px rgba(212, 113, 58, 0.18));
+}
+
+.hero-ep-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.hero-ep-label {
+  font-family: var(--f-body);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--c-naranja);
+  opacity: 0.9;
+}
+
+.hero-ep-title {
+  font-family: var(--f-body);
+  font-weight: 900;
+  font-size: clamp(2rem, 9vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--t-primary);
+}
+
+.hero-concept {
+  font-family: var(--f-display);
+  font-size: clamp(1rem, 4vw, 1.25rem);
+  color: var(--t-secondary);
+  font-style: italic;
+  letter-spacing: 0.01em;
+}
+
+.hero-event {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.hero-date {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--t-primary);
+  letter-spacing: 0.01em;
+}
+
+.hero-venue {
+  font-size: 0.875rem;
+  color: var(--t-secondary);
+}
+
+.hero-cta {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 14px 36px;
+  background-color: var(--c-naranja);
+  color: #0a0a0a;
+  font-family: var(--f-body);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: var(--radius-btn);
+  transition: background-color var(--ease-fast), transform var(--ease-fast);
+}
+
+.hero-cta:hover,
+.hero-cta:focus-visible {
+  background-color: var(--c-salmon);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.hero-cta:active {
+  transform: translateY(0);
+}
+
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  color: var(--t-muted);
+  animation: bounce 2.2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(6px); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LAYER 6 — PROGRESS INDICATOR
+═══════════════════════════════════════════════════════════ */
+.step-progress {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--b-subtle);
+  padding: 14px var(--pad-h);
+  display: none; /* shown by JS once flow starts */
+}
+
+.step-progress.visible {
+  display: block;
+}
+
+.progress-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.progress-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.node-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--t-muted);
+  border: 1.5px solid transparent;
+  transition: background-color var(--ease-mid), border-color var(--ease-mid), transform var(--ease-mid);
+}
+
+.progress-node.active .node-dot {
+  background-color: var(--c-naranja);
+  border-color: var(--c-naranja);
+  transform: scale(1.25);
+}
+
+.progress-node.done .node-dot {
+  background-color: var(--c-oliva);
+  border-color: var(--c-oliva);
+}
+
+.node-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--t-muted);
+  transition: color var(--ease-mid);
+  white-space: nowrap;
+}
+
+.progress-node.active .node-label {
+  color: var(--c-naranja);
+}
+
+.progress-node.done .node-label {
+  color: var(--c-oliva);
+}
+
+.progress-line {
+  flex: 1;
+  height: 1px;
+  background-color: var(--b-subtle);
+  margin: 0 8px;
+  margin-bottom: 14px; /* align with dots */
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--c-oliva);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--ease-slow);
+}
+
+.progress-line.filled::after {
+  transform: scaleX(1);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LAYER 7 — FLOW CONTAINER + STEP TRANSITIONS
+═══════════════════════════════════════════════════════════ */
+.flow-container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: var(--pad-v) var(--pad-h);
+}
+
+.flow-step {
+  display: none;
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.flow-step.active {
+  display: block;
+}
+
+.flow-step.entering {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--ease-slow), transform var(--ease-slow);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LAYER 8 — STEP HEADER
+═══════════════════════════════════════════════════════════ */
+.step-header {
+  margin-bottom: 32px;
+}
+
+.step-title {
+  font-family: var(--f-body);
+  font-weight: 900;
+  font-size: clamp(1.6rem, 7vw, 2rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--t-primary);
+  margin-bottom: 10px;
+}
+
+.step-subtitle {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--t-secondary);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LAYER 9 — FORM (STEP 1)
+═══════════════════════════════════════════════════════════ */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--t-secondary);
+}
+
+.field-input {
+  width: 100%;
+  padding: 14px 16px;
+  background-color: var(--c-bg-card);
+  border: 1px solid var(--b-subtle);
+  border-radius: var(--radius-input);
+  color: var(--t-primary);
+  font-family: var(--f-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  outline: none;
+  transition: border-color var(--ease-fast), background-color var(--ease-fast);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.field-input::placeholder {
+  color: var(--t-muted);
+}
+
+.field-input:focus {
+  border-color: var(--b-accent);
+  background-color: var(--c-bg-card-hover);
+}
+
+.field-input.has-error {
+  border-color: #c94040;
+}
+
+.field-hint {
+  font-size: 0.78rem;
+  color: var(--t-muted);
+  line-height: 1.5;
+}
+
+.field-error {
+  font-size: 0.78rem;
+  color: #e05858;
+  min-height: 1rem;
+  line-height: 1.4;
+}
+
+.form-disclaimer {
+  font-size: 0.75rem;
+  color: var(--t-muted);
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LAYER 10 — BUTTONS
+═══════════════════════════════════════════════════════════ */
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 16px 24px;
+  background-color: var(--c-naranja);
+  color: #0a0a0a;
+  font-family: var(--f-body);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: var(--radius-btn);
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--ease-fast), transform var(--ease-fast), opacity var(--ease-fast);
+  min-height: 52px;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--c-salmon);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+.btn-primary:focus-visible {
+  outline: 2px solid var(--c-naranja);
+  outline-offset: 3px;
+}
+
+.btn-ghost {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 14px 24px;
+  background-color: transparent;
+  color: var(--t-primary);
+  font-family: var(--f-body);
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: var(--radius-btn);
+  border: 1px solid var(--b-mid);
+  cursor: pointer;
+  transition: border-color var(--ease-fast), color var(--ease-fast), transform var(--ease-fast);
+  min-height: 48px;
+}
+
+.btn-ghost:hover,
+.btn-ghost:focus-visible {
+  border-color: var(--c-crema);
+  color: var(--c-crema);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.btn-loading {
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LAYER 11 — LYRIC CARDS (STEP 2)
+═══════════════════════════════════════════════════════════ */
+.lyric-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.lyric-card {
+  padding: 20px;
+  background-color: var(--c-bg-card);
+  border: 1px solid var(--b-subtle);
+  border-radius: var(--radius-card);
+  cursor: pointer;
+  transition: border-color var(--ease-fast), background-color var(--ease-fast), transform var(--ease-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.lyric-card::before {
+  content: '"';
+  position: absolute;
+  top: -12px;
+  right: 16px;
+  font-family: var(--f-display);
+  font-size: 80px;
+  color: var(--c-naranja);
+  opacity: 0.08;
+  line-height: 1;
+  pointer-events: none;
+  transition: opacity var(--ease-mid);
+}
+
+.lyric-card:hover {
+  border-color: var(--b-accent);
+  background-color: var(--c-bg-card-hover);
+  transform: translateY(-2px);
+}
+
+.lyric-card:hover::before {
+  opacity: 0.14;
+}
+
+.lyric-card.selected {
+  border-color: var(--c-naranja);
+  background-color: rgba(212, 113, 58, 0.07);
+}
+
+.lyric-card.selected::before {
+  opacity: 0.18;
+}
+
+.lyric-card:focus-visible {
+  outline: 2px solid var(--c-naranja);
+  outline-offset: 2px;
+}
+
+.card-song {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-naranja);
+  margin-bottom: 10px;
+}
+
+.feat {
+  color: var(--t-muted);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: none;
+}
+
+.card-lyric {
+  font-family: var(--f-display);
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--t-primary);
+  font-style: italic;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LAYER 12 — SPOTIFY BLOCK (STEP 3)
+═══════════════════════════════════════════════════════════ */
+.spotify-block {
+  background-color: var(--c-bg-card);
+  border: 1px solid var(--b-subtle);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.spotify-artist {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.spotify-artist-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: rgba(212, 113, 58, 0.12);
+  padding: 8px;
+}
+
+.spotify-artist-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.spotify-artist-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--t-primary);
+}
+
+.spotify-artist-label {
+  font-size: 0.75rem;
+  color: var(--t-muted);
+  letter-spacing: 0.04em;
+}
+
+.btn-spotify {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 24px;
+  background-color: var(--c-spotify);
+  color: #000;
+  font-family: var(--f-body);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  border-radius: var(--radius-btn);
+  transition: background-color var(--ease-fast), transform var(--ease-fast);
+  min-height: 48px;
+}
+
+.btn-spotify:hover,
+.btn-spotify:focus-visible {
+  background-color: #23d663;
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.btn-spotify:active {
+  transform: translateY(0);
+}
+
+.spotify-icon-svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LAYER 13 — CHECKBOX
+═══════════════════════════════════════════════════════════ */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  margin-bottom: 24px;
+  padding: 14px 16px;
+  background-color: var(--c-bg-card);
+  border: 1px solid var(--b-subtle);
+  border-radius: var(--radius-input);
+  transition: border-color var(--ease-fast);
+}
+
+.checkbox-label:hover {
+  border-color: var(--b-mid);
+}
+
+.checkbox-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkbox-custom {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 1.5px solid var(--b-mid);
+  background-color: transparent;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color var(--ease-fast), background-color var(--ease-fast);
+  position: relative;
+}
+
+.checkbox-input:checked + .checkbox-custom {
+  background-color: var(--c-naranja);
+  border-color: var(--c-naranja);
+}
+
+.checkbox-input:checked + .checkbox-custom::after {
+  content: '';
+  width: 6px;
+  height: 10px;
+  border-right: 2px solid #0a0a0a;
+  border-bottom: 2px solid #0a0a0a;
+  transform: rotate(45deg) translateY(-1px);
+  display: block;
+}
+
+.checkbox-input:focus-visible + .checkbox-custom {
+  outline: 2px solid var(--c-naranja);
+  outline-offset: 2px;
+}
+
+.checkbox-text {
+  font-size: 0.9rem;
+  color: var(--t-secondary);
+  line-height: 1.4;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LAYER 14 — SUCCESS SCREEN
+═══════════════════════════════════════════════════════════ */
+.success-screen {
+  text-align: center;
+  padding-top: 16px;
+}
+
+.success-z-deco {
+  margin: 0 auto 28px;
+  width: 56px;
+  opacity: 0.5;
+}
+
+.success-message {
+  margin-bottom: 32px;
+}
+
+.success-body {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--t-primary);
+  margin-bottom: 20px;
+}
+
+.success-signature {
+  font-family: var(--f-display);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--t-secondary);
+  font-style: italic;
+}
+
+.success-signature em {
+  color: var(--c-naranja);
+}
+
+.success-event {
+  padding: 20px;
+  background-color: var(--c-bg-card);
+  border: 1px solid var(--b-subtle);
+  border-radius: var(--radius-card);
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.success-event-date {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--t-primary);
+}
+
+.success-event-time {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--c-naranja);
+  letter-spacing: -0.02em;
+}
+
+.success-event-venue {
+  font-size: 0.875rem;
+  color: var(--t-secondary);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LAYER 15 — FOOTER
+═══════════════════════════════════════════════════════════ */
+.site-footer {
+  padding: 32px var(--pad-h) 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid var(--b-subtle);
+}
+
+.footer-logo {
+  width: 72px;
+  height: auto;
+  opacity: 0.5;
+}
+
+.footer-copy {
+  font-size: 0.72rem;
+  color: var(--t-muted);
+  letter-spacing: 0.06em;
+}
+
+.footer-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.footer-divider {
+  font-size: 0.65rem;
+  color: var(--t-muted);
+  opacity: 0.5;
+}
+
+.footer-siente-logo {
+  width: 64px;
+  height: auto;
+  opacity: 0.4;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LAYER 16 — RESPONSIVE (desktop centering only)
+═══════════════════════════════════════════════════════════ */
+@media (min-width: 600px) {
+  .site-hero {
+    padding: 80px var(--pad-h) 100px;
+  }
+
+  .flow-container {
+    padding: 56px var(--pad-h);
+  }
+}

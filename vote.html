@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vota el outfit — Zuco</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Vota el outfit de Zuco para su próximo show.">
+  <link rel="icon" type="image/png" href="./assets/logos/reduccion-z-blanco.png">
+  <link rel="stylesheet" href="./vote.css">
+</head>
+<body>
+
+  <!-- ── PHASE A: VOTING ─────────────────────────────────── -->
+  <section id="phase-vote" class="phase" aria-label="Votación de outfit">
+
+    <header class="vote-header">
+      <img class="vote-logo" src="./assets/logos/logo-zuco-blanco.png" alt="Zuco" width="100">
+      <h1 class="vote-title">¿Cuál outfit<br>se lleva el show?</h1>
+    </header>
+
+    <!-- Carousel -->
+    <div class="carousel" role="group" aria-label="Opciones de outfit">
+
+      <div class="carousel-viewport">
+        <div class="carousel-track">
+
+          <div class="carousel-slide" data-fit="fit1">
+            <article class="outfit-card" tabindex="0" role="button" aria-pressed="false" aria-label="Elegir el Fit 1">
+              <div class="outfit-img-wrap">
+                <img src="./assets/outfits/Fit1.png" alt="Outfit 1" loading="eager" draggable="false">
+                <div class="outfit-check" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="outfit-label">
+                <span class="outfit-num">Fit 01</span>
+                <span class="outfit-hint">Toca para elegir</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="carousel-slide" data-fit="fit2">
+            <article class="outfit-card" tabindex="0" role="button" aria-pressed="false" aria-label="Elegir el Fit 2">
+              <div class="outfit-img-wrap">
+                <img src="./assets/outfits/Fit2.png" alt="Outfit 2" loading="lazy" draggable="false">
+                <div class="outfit-check" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="outfit-label">
+                <span class="outfit-num">Fit 02</span>
+                <span class="outfit-hint">Toca para elegir</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="carousel-slide" data-fit="fit3">
+            <article class="outfit-card" tabindex="0" role="button" aria-pressed="false" aria-label="Elegir el Fit 3">
+              <div class="outfit-img-wrap">
+                <img src="./assets/outfits/Fit3.png" alt="Outfit 3" loading="lazy" draggable="false">
+                <div class="outfit-check" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="outfit-label">
+                <span class="outfit-num">Fit 03</span>
+                <span class="outfit-hint">Toca para elegir</span>
+              </div>
+            </article>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Nav arrows -->
+      <button class="carousel-prev" aria-label="Outfit anterior" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <button class="carousel-next" aria-label="Siguiente outfit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+
+      <!-- Dots -->
+      <div class="carousel-dots" role="tablist" aria-label="Seleccionar outfit">
+        <button class="carousel-dot is-active" data-index="0" role="tab" aria-label="Fit 01" aria-selected="true"></button>
+        <button class="carousel-dot" data-index="1" role="tab" aria-label="Fit 02" aria-selected="false"></button>
+        <button class="carousel-dot" data-index="2" role="tab" aria-label="Fit 03" aria-selected="false"></button>
+      </div>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="vote-action">
+      <p class="vote-desc">El outfit con más votos será el look de Zuco <em>esta noche</em>.<br>Elige y vota.</p>
+      <button id="btn-votar" class="btn-primary" type="button" disabled aria-disabled="true">
+        <span class="btn-text">Votar</span>
+        <span class="btn-loader" aria-hidden="true"></span>
+      </button>
+      <p id="vote-error" class="vote-error" role="alert" aria-live="polite" hidden></p>
+    </div>
+
+  </section>
+
+  <!-- ── PHASE B: RESULTS ────────────────────────────────── -->
+  <section id="phase-results" class="phase phase--hidden" aria-label="Resultados de la votación">
+
+    <header class="vote-header">
+      <img class="vote-logo" src="./assets/logos/logo-zuco-blanco.png" alt="Zuco" width="100">
+      <h1 id="results-title" class="vote-title">Gracias<br>por votar.</h1>
+      <p class="vote-subtitle">El outfit con más votos será el look de Zuco esta noche.</p>
+    </header>
+
+    <div class="results-chart" aria-label="Resultados">
+
+      <div class="bar-row" data-fit="fit1">
+        <div class="bar-header">
+          <div class="bar-thumb-wrap">
+            <img class="bar-thumb" src="./assets/outfits/Fit1.png" alt="Fit 01" loading="lazy">
+          </div>
+          <div class="bar-info">
+            <span class="bar-label">Fit 01</span>
+            <span class="bar-count">0 votos</span>
+          </div>
+          <span class="bar-pct">0%</span>
+        </div>
+        <div class="bar-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Fit 01 porcentaje">
+          <div class="bar-fill"></div>
+        </div>
+      </div>
+
+      <div class="bar-row" data-fit="fit2">
+        <div class="bar-header">
+          <div class="bar-thumb-wrap">
+            <img class="bar-thumb" src="./assets/outfits/Fit2.png" alt="Fit 02" loading="lazy">
+          </div>
+          <div class="bar-info">
+            <span class="bar-label">Fit 02</span>
+            <span class="bar-count">0 votos</span>
+          </div>
+          <span class="bar-pct">0%</span>
+        </div>
+        <div class="bar-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Fit 02 porcentaje">
+          <div class="bar-fill"></div>
+        </div>
+      </div>
+
+      <div class="bar-row" data-fit="fit3">
+        <div class="bar-header">
+          <div class="bar-thumb-wrap">
+            <img class="bar-thumb" src="./assets/outfits/Fit3.png" alt="Fit 03" loading="lazy">
+          </div>
+          <div class="bar-info">
+            <span class="bar-label">Fit 03</span>
+            <span class="bar-count">0 votos</span>
+          </div>
+          <span class="bar-pct">0%</span>
+        </div>
+        <div class="bar-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Fit 03 porcentaje">
+          <div class="bar-fill"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <p id="results-total" class="results-total" aria-live="polite">Cargando resultados…</p>
+
+  </section>
+
+  <!-- ── FOOTER ──────────────────────────────────────────── -->
+  <footer class="vote-footer" role="contentinfo">
+    <img src="./assets/logos/logo-zuco-blanco.png" alt="Zuco" width="80" loading="lazy">
+    <span class="footer-sep" aria-hidden="true"></span>
+    <img src="./assets/logos/siente-logo-white.png" alt="Siente" width="56" loading="lazy">
+  </footer>
+
+  <script src="./vote.js"></script>
+</body>
+</html>

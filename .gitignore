@@ -1,2 +1,8 @@
 BRANDING/
 .DS_Store
+Thumbs.db
+.vercel
+.idea
+.vscode
+.claude/
+*.log

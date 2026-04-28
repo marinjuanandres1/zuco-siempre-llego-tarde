@@ -570,11 +570,6 @@ button { font-family: var(--f-body); }
   color: var(--t-primary);
 }
 
-.bar-count {
-  font-size: 0.75rem;
-  color: var(--t-muted);
-  font-variant-numeric: tabular-nums;
-}
 
 .bar-pct {
   font-size: 1.5rem;
@@ -608,12 +603,6 @@ button { font-family: var(--f-body); }
   box-shadow: 0 0 14px rgba(212, 113, 58, 0.4);
 }
 
-.results-total {
-  font-size: 0.8rem;
-  color: var(--t-muted);
-  text-align: center;
-  letter-spacing: 0.03em;
-}
 
 
 /* ═══════════════════════════════════════════════════════════

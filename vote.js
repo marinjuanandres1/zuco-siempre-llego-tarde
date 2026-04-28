@@ -1,33 +1,33 @@
 /* ─────────────────────────────────────────────────────────
    Zuco — Outfit Voting
-   Transport : JSONP (sidesteps CORS on Apps Script)
-   Backend   : Google Apps Script + Google Sheets
+   Transport : fetch (Supabase REST API)
+   Backend   : Supabase + PostgreSQL
    ───────────────────────────────────────────────────────── */
 
-const VOTE_SCRIPT_URL  = 'https://script.google.com/macros/s/AKfycby0dA8pN5HZbxrfZlTZcgkRQ9y3jBXm0mM-1_aAXa8I7HykcHjOHR9aFZjQ_i45XGk/exec';
+const SUPABASE_URL = 'https://nuozfrqpdadgkwtwvbgx.supabase.co';   // e.g. https://xxxx.supabase.co
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im51b3pmcnFwZGFkZ2t3dHd2Ymd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc0MDU5NDQsImV4cCI6MjA5Mjk4MTk0NH0.YujZyyAFcRmcZ4N2YaO9HGyD-XL76DDS24Nb_4sxW_k';
 const POLL_INTERVAL_MS = 10000;
 
 /* ── State ─────────────────────────────────────────────── */
-let voterId     = null;
-let votedFit    = null;
-let selectedFit = null;
-let pollTimer   = null;
+let voterId      = null;
+let votedFit     = null;
+let selectedFit  = null;
+let pollTimer    = null;
 let currentSlide = 0;
 const TOTAL_SLIDES = 3;
 
 /* ── DOM refs ──────────────────────────────────────────── */
-const phaseVote    = document.getElementById('phase-vote');
-const phaseResults = document.getElementById('phase-results');
-const btnVotar     = document.getElementById('btn-votar');
-const voteError    = document.getElementById('vote-error');
-const resultsTitle = document.getElementById('results-title');
-const resultsTotal = document.getElementById('results-total');
-const cards        = document.querySelectorAll('.outfit-card');
-const barRows      = document.querySelectorAll('.bar-row');
+const phaseVote     = document.getElementById('phase-vote');
+const phaseResults  = document.getElementById('phase-results');
+const btnVotar      = document.getElementById('btn-votar');
+const voteError     = document.getElementById('vote-error');
+const resultsTitle  = document.getElementById('results-title');
+const cards         = document.querySelectorAll('.outfit-card');
+const barRows       = document.querySelectorAll('.bar-row');
 const carouselTrack = document.querySelector('.carousel-track');
-const prevBtn      = document.querySelector('.carousel-prev');
-const nextBtn      = document.querySelector('.carousel-next');
-const dots         = document.querySelectorAll('.carousel-dot');
+const prevBtn       = document.querySelector('.carousel-prev');
+const nextBtn       = document.querySelector('.carousel-next');
+const dots          = document.querySelectorAll('.carousel-dot');
 
 /* ── Boot ──────────────────────────────────────────────── */
 function init() {
@@ -78,7 +78,6 @@ function initCarousel() {
     });
   });
 
-  // Touch swipe
   var touchStartX = 0;
   carouselTrack.addEventListener('touchstart', function(e) {
     touchStartX = e.touches[0].clientX;
@@ -130,7 +129,6 @@ function selectCard(card) {
   card.querySelector('.outfit-hint').textContent = '✓ Elegido';
   selectedFit = card.closest('.carousel-slide').dataset.fit;
 
-  // Highlight the dot for the selected fit
   var slideIndex = Array.from(document.querySelectorAll('.carousel-slide'))
     .findIndex(function(s) { return s.dataset.fit === selectedFit; });
   dots.forEach(function(dot, i) {
@@ -153,22 +151,32 @@ function submitVote(fit) {
   setButtonLoading(true);
   hideError();
 
-  jsonp(VOTE_SCRIPT_URL, 'vote', { action: 'vote', voterId: voterId, fit: fit }, 9000)
-    .then(function(data) {
-      if (data.ok) {
-        onVoteSuccess(fit);
-      } else if (data.reason === 'duplicate') {
-        localStorage.setItem('zuco_voted_fit', 'unknown');
-        votedFit = 'unknown';
-        showResults(false);
-        startPolling();
-      } else {
-        onVoteError('No se pudo registrar el voto. Intenta de nuevo.');
-      }
-    })
-    .catch(function() {
-      onVoteError('Error de conexión. Revisa tu red e intenta de nuevo.');
-    });
+  fetch(SUPABASE_URL + '/rest/v1/votes', {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=minimal'
+    },
+    body: JSON.stringify({ voter_id: voterId, fit: fit })
+  })
+  .then(function(res) {
+    if (res.status === 201) {
+      onVoteSuccess(fit);
+    } else if (res.status === 409) {
+      // Unique constraint hit — already voted from another device
+      localStorage.setItem('zuco_voted_fit', 'unknown');
+      votedFit = 'unknown';
+      showResults(false);
+      startPolling();
+    } else {
+      onVoteError('No se pudo registrar el voto. Intenta de nuevo.');
+    }
+  })
+  .catch(function() {
+    onVoteError('Error de conexión. Revisa tu red e intenta de nuevo.');
+  });
 }
 
 function onVoteSuccess(fit) {
@@ -189,9 +197,7 @@ function showResults(isNewVote) {
     resultsTitle.innerHTML = 'Resultados<br>en vivo.';
   }
 
-  // Pre-fill bars with zeros so they never show dashes
   renderResults({ fit1: 0, fit2: 0, fit3: 0 });
-  resultsTotal.textContent = 'Cargando resultados…';
 
   phaseVote.classList.add('phase--hidden');
   phaseResults.classList.remove('phase--hidden');
@@ -218,11 +224,21 @@ function onVisibilityChange() {
 }
 
 function fetchResults() {
-  jsonp(VOTE_SCRIPT_URL, 'results', { action: 'results' }, 9000)
-    .then(renderResults)
-    .catch(function() {
-      resultsTotal.textContent = 'Error actualizando. Reintentando…';
+  fetch(SUPABASE_URL + '/rest/v1/votes?select=fit', {
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_KEY
+    }
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(rows) {
+    var counts = { fit1: 0, fit2: 0, fit3: 0 };
+    rows.forEach(function(row) {
+      if (counts[row.fit] !== undefined) counts[row.fit]++;
     });
+    renderResults(counts);
+  })
+  .catch(function() { /* silent retry on next poll */ });
 }
 
 function renderResults(data) {
@@ -240,53 +256,10 @@ function renderResults(data) {
 
     row.querySelector('.bar-fill').style.width = pct + '%';
     row.querySelector('.bar-pct').textContent  = pct + '%';
-    row.querySelector('.bar-count').textContent = count === 1 ? '1 voto' : count + ' votos';
     row.querySelector('.bar-track').setAttribute('aria-valuenow', pct);
 
     row.classList.toggle('is-winner', total > 0 && count === maxCount && maxCount > 0);
     row.classList.toggle('is-mine',   fit === votedFit);
-  });
-
-  if (total === 0) {
-    resultsTotal.textContent = 'Sé el primero en votar.';
-  } else {
-    resultsTotal.textContent = 'Total: ' + total + (total === 1 ? ' voto' : ' votos');
-  }
-}
-
-/* ── JSONP transport ───────────────────────────────────── */
-function jsonp(baseUrl, id, params, timeoutMs) {
-  return new Promise(function(resolve, reject) {
-    var callbackName = '__zv_' + id + '_' + Date.now();
-    var timer;
-
-    window[callbackName] = function(data) {
-      clearTimeout(timer);
-      delete window[callbackName];
-      if (script.parentNode) document.head.removeChild(script);
-      resolve(data);
-    };
-
-    var qs = Object.keys(params).map(function(k) {
-      return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
-    }).join('&');
-
-    var script = document.createElement('script');
-    script.src = baseUrl + '?' + qs + '&callback=' + callbackName;
-    script.onerror = function() {
-      clearTimeout(timer);
-      delete window[callbackName];
-      if (script.parentNode) document.head.removeChild(script);
-      reject(new Error('JSONP network error'));
-    };
-
-    timer = setTimeout(function() {
-      delete window[callbackName];
-      if (script.parentNode) document.head.removeChild(script);
-      reject(new Error('JSONP timeout'));
-    }, timeoutMs || 9000);
-
-    document.head.appendChild(script);
   });
 }
 

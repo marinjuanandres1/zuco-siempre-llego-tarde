@@ -162,12 +162,13 @@ button { font-family: var(--f-body); }
 }
 
 .vote-title {
-  font-family: var(--f-display);
-  font-size: clamp(2rem, 9vw, 2.8rem);
-  font-weight: 400;
+  font-family: var(--f-body);
+  font-size: clamp(1.6rem, 7vw, 2.1rem);
+  font-weight: 900;
   line-height: 1.15;
   color: var(--t-primary);
   letter-spacing: -0.01em;
+  text-transform: uppercase;
 }
 
 .vote-subtitle {
@@ -438,10 +439,9 @@ button { font-family: var(--f-body); }
 }
 
 .vote-desc em {
-  font-style: italic;
+  font-style: normal;
   color: var(--c-salmon);
-  font-family: var(--f-display);
-  font-size: 1em;
+  font-weight: 700;
 }
 
 .btn-primary {
@@ -626,8 +626,9 @@ button { font-family: var(--f-body); }
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 18px;
   border-top: 1px solid var(--b-subtle);
+  flex-wrap: wrap;
 }
 
 .vote-footer img { opacity: 0.55; }
@@ -635,9 +636,71 @@ button { font-family: var(--f-body); }
 .footer-sep {
   display: block;
   width: 1px;
-  height: 28px;
+  height: 24px;
   background: var(--b-mid);
   flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LAYER 9b — TRES60 PROMO
+═══════════════════════════════════════════════════════════ */
+.tres60-promo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 16px;
+  background: var(--c-bg-card);
+  border: 1px solid var(--b-subtle);
+  border-radius: var(--radius-card);
+  text-align: center;
+}
+
+.tres60-promo-text {
+  font-size: 0.84rem;
+  color: var(--t-secondary);
+  line-height: 1.5;
+  max-width: 30ch;
+}
+
+.tres60-promo-text strong {
+  color: var(--t-primary);
+  font-weight: 700;
+}
+
+.btn-tres60 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  background: transparent;
+  color: var(--c-crema);
+  border: 1.5px solid var(--c-crema);
+  border-radius: var(--radius-btn);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background var(--ease-fast),
+    color var(--ease-fast),
+    border-color var(--ease-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-tres60:hover {
+  background: var(--c-crema);
+  color: var(--c-bg);
+  border-color: var(--c-crema);
+}
+
+.btn-tres60 svg {
+  width: 14px;
+  height: 14px;
 }
 
 /* ═══════════════════════════════════════════════════════════

@@ -249,23 +249,33 @@ blockquote {
   letter-spacing: 0.01em;
 }
 
-.hero-event {
+.hero-aforo-block {
+  margin-top: 24px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  margin-top: 4px;
+  align-items: center;
+  gap: 8px;
 }
 
-.hero-date {
-  font-weight: 500;
-  font-size: 0.95rem;
-  color: var(--t-primary);
-  letter-spacing: 0.01em;
+.hero-aforo-badge {
+  display: inline-block;
+  padding: 10px 24px;
+  border: 1.5px solid var(--c-naranja);
+  border-radius: 4px;
+  font-family: var(--f-body);
+  font-weight: 900;
+  font-size: clamp(1rem, 4vw, 1.25rem);
+  letter-spacing: 0.16em;
+  color: var(--c-naranja);
+  text-transform: uppercase;
 }
 
-.hero-venue {
-  font-size: 0.875rem;
+.hero-aforo-sub {
+  font-family: var(--f-display);
+  font-size: clamp(0.9rem, 3.5vw, 1.1rem);
   color: var(--t-secondary);
+  font-style: italic;
+  text-align: center;
 }
 
 .hero-cta {

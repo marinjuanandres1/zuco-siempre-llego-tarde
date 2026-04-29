@@ -31,21 +31,23 @@
         <h1 class="hero-ep-title">Siempre Llego Tarde</h1>
       </div>
       <p class="hero-concept">El más feliz de los tristes</p>
-      <div class="hero-event">
-        <p class="hero-date">Miércoles 29 de abril · 7:00 PM</p>
-        <p class="hero-venue">Antenna · Carrera 14 #85-24</p>
+      <div class="hero-aforo-block">
+        <span class="hero-aforo-badge">AFORO COMPLETO</span>
+        <p class="hero-aforo-sub">La lista está cerrada.</p>
       </div>
-      <a href="#registro" class="hero-cta">Quiero estar ahí</a>
-    </div>
-    <div class="hero-scroll-hint" aria-hidden="true">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+      <a
+        href="https://open.spotify.com/artist/6hA5ALJWFb44ixgQMMvng7"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hero-cta"
+      >
+        Escuchar el EP
+      </a>
     </div>
   </header>
 
   <!-- ═══════════════════════ PROGRESS ═══════════════════════════ -->
-  <div class="step-progress" id="step-progress" aria-label="Progreso del registro">
+  <div class="step-progress" id="step-progress" aria-label="Progreso del registro" style="display:none">
     <div class="progress-inner">
       <div class="progress-node active" data-step="1">
         <span class="node-dot"></span>
@@ -65,7 +67,7 @@
   </div>
 
   <!-- ═══════════════════════ MAIN FLOW ═══════════════════════════ -->
-  <main class="flow-container" id="registro">
+  <main class="flow-container" id="registro" style="display:none">
 
     <!-- ───────── STEP 1: REGISTRO ───────── -->
     <section id="step-1" class="flow-step active" aria-label="Paso 1: Registro">
